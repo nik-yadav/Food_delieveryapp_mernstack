@@ -1,5 +1,7 @@
 const mongoose = require("mongoose")
-const mongoURI = "YOUR_DATABASE-URL"
+const dotenv = require('dotenv')
+dotenv.config();
+const mongoURI = process.env.URL;
 
 const mongoCo = async () => {
   try {

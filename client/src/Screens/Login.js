@@ -17,7 +17,7 @@ export default function Login (){
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(JSON.stringify({email: credentials.email, password: credentials.password}))
+    // console.log(JSON.stringify({email: credentials.email, password: credentials.password}))
     const response = await fetch("http://localhost:8000/api/loginuser", {
       method: 'POST',
       headers: {
@@ -34,21 +34,12 @@ export default function Login (){
       alert("Enter valid credentials");
       return
     }
-    const data = await fetch("http://localhost:8000/api/getdata",{
-      method:"POST",
-      headers:{
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        email:credentials.email,
-      })
-    })
-    json1 = await data.json();
-    setid(json1.id)
     if(json.success){
       localStorage.setItem("authToken", json.authToken)
       localStorage.setItem("email",credentials.email)
-      console.log(localStorage.getItem("authToken"));
+      localStorage.setItem("id",json.id)
+      // localStorage.setItem("email",credentials.email)
+      // console.log(localStorage.getItem("authToken"));
       navigate("/");
     }
     

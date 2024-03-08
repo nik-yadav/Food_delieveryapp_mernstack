@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+
+  const navigate = useNavigate();
+
   const [credentials, setCredentials] = useState({
     name: "",
     email: "",
@@ -24,10 +27,14 @@ const SignUp = () => {
       }),
     });
     const json = await response.json();
-    console.log(json);
+    // console.log(json);
 
     if (!json.success) {
       alert("Enter valid credentials");
+    }
+
+    if(json.success){
+      navigate('/login')
     }
   };
 

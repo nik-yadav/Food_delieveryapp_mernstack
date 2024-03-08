@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt");
 const jwtsecret = "hyjdkrhfkdmdlfjgtmrkdhfirhtlsmwb"
 
+// api = "http://localhost:8000/api/createuser"
 router.post(
   "/createuser",
   [
@@ -15,12 +16,12 @@ router.post(
     body("password", "Incorrect Password").isLength({ min: 5 }),
   ],
   async (req, res) => {
-    console.log(
-      req.body.name,
-      req.body.password,
-      req.body.email,
-      req.body.location
-    );
+    // console.log(
+    //   req.body.name,
+    //   req.body.password,
+    //   req.body.email,
+    //   req.body.location
+    // );
 
     const error = validationResult(req);
     if (!error.isEmpty()) {
@@ -47,6 +48,7 @@ router.post(
   }
 );
 
+// api = "http://localhost:8000/api/loginuser"
 router.post(
   "/loginuser",
   [
@@ -78,7 +80,8 @@ router.post(
         }
       }
       const authToken = jwt.sign(data,jwtsecret)
-      return res.json({ success: true,authToken:authToken });
+      const id = userData._id;
+      return res.json({ success: true,authToken:authToken, id: id });
     } catch (error) {
       console.log(error);
       res.json({ success: false });

@@ -36,6 +36,10 @@ const Card = (props) => {
     // console.log(dataState);
   }
 
+  const handleCard1 = () => {
+    
+  }
+
   useEffect(()=>{
     console.log('done')
     // console.log(dataState)
