@@ -1,35 +1,25 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
 import { Mycontext } from '../Components/Contextreducer'
 import { datacontext } from '../Components/Contextreducer'
 import Navbar from '../Components/Navbar'
+import {Delete} from '@mui/icons-material'
+import { loadata } from '../utils/api'
 
 
 const Cart = () => {
 
-  const [dataState] = useContext(Mycontext)
-  const [id] = useContext(datacontext)
+  const [dataState, setdatastate] = useContext(Mycontext)
   const length = Object.keys(dataState).length;
-  // const [price, setState] = useState(0);
 
   let price = 0;
 
   const handleclick = async (e) => {
-    if(length == 0){
+    if(length === 0){
       alert("Your cart is empty")
       return
     }
     e.preventDefault();
-
-    const array_name = Object.keys(dataState).map((prop)=>{
-      return dataState[prop][0];
-    })
-    const size = Object.keys(dataState).map((prop)=>{
-      return dataState[prop][2];
-    })
-    const quantity = Object.keys(dataState).map((prop)=>{
-      return dataState[prop][1];
-    })
 
     const date = new Date();
 
@@ -42,7 +32,7 @@ const Cart = () => {
         email:localStorage.getItem('email'),
         data: dataState,
         totalprice: price,
-        date: date,
+        date: date, 
       }),
     });
     const json = await response.json();
@@ -70,9 +60,16 @@ const Cart = () => {
         <td>{dataState[prop][2]}</td>
         <td>{dataState[prop][1]}</td>
         <td>{dataState[prop][3]}</td>
+        <td><button><Delete /></button></td>
       </tr>
     ))
   }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // useEffect(()=>{
+  //   loadata();
+  // }, [])
+
 
   return (
     
@@ -88,6 +85,7 @@ const Cart = () => {
             <th>Size</th>
             <th>Quantity</th>
             <th>Price</th>
+            <th>Remove</th>
           </tr>
         </thead>
         <tbody>
@@ -104,3 +102,26 @@ const Cart = () => {
 }
 
 export default Cart
+
+
+// const handleDelete = async() => {
+  // const duplicateobj = {...dataState};
+  // const response = await fetch('http://localhost:8000/api/createcart',{
+  //   method:"POST",
+  //   headers:{
+  //     "Content-Type":"application/json"
+  //   },
+  //   body: JSON.stringify({
+  //     uid: localStorage.getItem('id'),
+  //     orders: duplicateobj,
+  //   })
+  // })
+  // const json = await response.json();
+  // // console.log(json)
+  // if(!json.success){
+  //   console.log("Not done your card")
+  // }
+  // if(json.success){
+  //   console.log("done your card")
+  // }
+// }
