@@ -54,7 +54,7 @@ const Navbar = () => {
                   Login
                 </Link>
 
-                <Link className="btn bg-white text-success mx-1" to="/createuser">
+                <Link className="btn bg-white text-success mx-1" to="/signup">
                   SignUp
                 </Link>
             </div>

@@ -7,7 +7,7 @@ const port = process.env.PORT;
 mongoCo();
 
 app.use((req,res,next)=>{
-    res.setHeader("Access-Control-Allow-Origin","http://localhost:3000");
+    res.setHeader("Access-Control-Allow-Origin", process.env.CLIENT_URI);
     res.header(
         "Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept"
@@ -22,5 +22,5 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port, ()=>{
-    console.log(`Example app listening on port: ${port}`);
+    console.log(`App is listening on port: ${port}`);
 })

@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from 'react'
 import {Link, useNavigate} from "react-router-dom"
 
 import { datacontext } from '../Components/Contextreducer';
+import api from '../utils/service';
 
 export default function Login (){
 
@@ -18,28 +19,19 @@ export default function Login (){
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log(JSON.stringify({email: credentials.email, password: credentials.password}))
-    const response = await fetch("http://localhost:8000/api/loginuser", {
-      method: 'POST',
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        email: credentials.email,
-        password: credentials.password,
-      }),
-    });
-    const json = await response.json();
-
-    if (!json.success) {
+    const response = await api.post('/api/loginuser', {
+      email: credentials.email,
+      password: credentials.password,
+    })
+    
+    if (!response.data.success) {
       alert("Enter valid credentials");
       return
     }
-    if(json.success){
-      localStorage.setItem("authToken", json.authToken)
+    if(response.data.success){
+      localStorage.setItem("authToken", response.authToken)
       localStorage.setItem("email",credentials.email)
-      localStorage.setItem("id",json.id)
-      // localStorage.setItem("email",credentials.email)
-      // console.log(localStorage.getItem("authToken"));
+      localStorage.setItem("id",response.id)
       navigate("/");
     }
     

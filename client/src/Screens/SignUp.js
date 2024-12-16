@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import api from "../utils/service";
 
 const SignUp = () => {
 
@@ -14,26 +15,18 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:8000/api/createuser", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
+    const response = await api.post("api/createuser", {
         name: credentials.name,
         email: credentials.email,
         password: credentials.password,
         location: credentials.geolocation,
-      }),
     });
-    const json = await response.json();
-    // console.log(json);
 
-    if (!json.success) {
+    if (!response.data.success) {
       alert("Enter valid credentials");
     }
 
-    if(json.success){
+    if(response.data.success){
       navigate('/login')
     }
   };
