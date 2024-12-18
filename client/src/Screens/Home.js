@@ -13,8 +13,8 @@ const Home = () => {
 
   const loadData = async () => {
     let response = await api.get("/api/foodData");
-    setfooditem(response.data[0]);
-    setFoodCat(response.data[1]);
+    setfooditem(response.data.foodContent);
+    setFoodCat(response.data.categoryContent);
   };
 
   useEffect(() => {
@@ -23,9 +23,7 @@ const Home = () => {
 
   return (
     <div>
-      <div>
         <Navbar />
-      </div>
       <div>
         <div
           id="carouselExampleFade"

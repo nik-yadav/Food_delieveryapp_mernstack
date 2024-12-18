@@ -1,12 +1,16 @@
 const express = require("express");
 const ram = require("../models/User");
+const items = require("../models/items.js")
+const category = require('../models/category.js')
 const order = require("../models/Orders")
 const router = express.Router();
 
-router.get("/foodData", (req,res)=>{
+router.get("/foodData", async(req,res)=>{
     try {
-        // console.log(global.food_items);
-        res.send([global.food_items, global.foodCategory])
+        const foodContent = await items.find();
+        const categoryContent = await category.find();
+        res.status(200).json({foodContent, categoryContent});
+
     } catch (error) {
         console.error(error.message);
         res.send("Server Error")
