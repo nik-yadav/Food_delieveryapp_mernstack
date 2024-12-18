@@ -3,9 +3,9 @@ const { default: mongoose } = require("mongoose");
 const { Schema } = mongoose;
 const categorySchema = new Schema({
     CategoryName: {
-        name: String,
+        type: String,
         required: true,
     }
 })
 
-module.exports = mongoose.model('foodCategory', categorySchema);
+module.exports = mongoose.model('food_categories', categorySchema);
