@@ -23,9 +23,7 @@ const Home = () => {
 
   return (
     <div>
-      <div>
         <Navbar />
-      </div>
       <div>
         <div
           id="carouselExampleFade"
