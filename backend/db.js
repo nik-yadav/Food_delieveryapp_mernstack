@@ -5,25 +5,25 @@ const mongoURI = process.env.MONGO_URI;
 
 const mongoCo = async () => {
   try {
-    await mongoose.connect(mongoURI, { useNewUrlParser: true });
-    console.log('Connected to the database');
-
-    const fetched_data = await mongoose.connection.db.collection("food_items");
-    const data = await fetched_data.find({}).toArray();
-
-    const foodCategory = await mongoose.connection.db.collection("foodCategory");
-    const catdata = await foodCategory.find({}).toArray();
-
-    global.food_items = data;
-    //console.log(global.food_items);
-    global.foodCategory = catdata;
-    //console.log(global.foodCategory); 
-
+    await mongoose.connect(mongoURI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
   } catch (err) {
     console.error('Database connection error', err);
   }
-}
+};
+
+mongoose.connection.on('connected', () => {
+  console.log('Mongoose connected');
+});
+
+mongoose.connection.on('error', (err) => {
+  console.error('Mongoose connection error: ' + err);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('Mongoose disconnected');
+});
 
 module.exports = mongoCo;
-
-

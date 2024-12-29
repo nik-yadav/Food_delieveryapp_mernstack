@@ -1,27 +1,27 @@
 const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
-const UserSchema = new Schema({
+const ItemsSchema = new Schema({
   name: {
     type: String,
     required: true,
   },
-  location: {
+  img: {
     type: String,
     required: true,
   },
-  email: {
+  description: {
     type: String,
     required: true,
   },
-  password: {
+  CategoryName: {
     type: String,
     required: true,
   },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
+  options: {
+    type: Array,
+    required: true,
+  }
 });
 
-module.exports = mongoose.model("user", UserSchema);
+module.exports = mongoose.model("food_items", ItemsSchema);
