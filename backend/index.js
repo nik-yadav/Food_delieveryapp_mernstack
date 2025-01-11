@@ -1,10 +1,8 @@
 const express = require('express')
 const dotenv = require('dotenv')
 const app = express()
-const mongoCo = require("./db")
 dotenv.config();
 const port = process.env.PORT;
-// mongoCo();
 
 app.use((req,res,next)=>{
     res.setHeader("Access-Control-Allow-Origin", process.env.CLIENT_URI);

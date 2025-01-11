@@ -9,57 +9,62 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id        String   @id @default(uuid()) @db.Char(36)
   firstName String
-  lastName String
-  isAdmin Boolean
-  address String
-  email String @unique
-  password String
+  lastName  String
+  isAdmin   Boolean
+  address   String
+  email     String   @unique
+  password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  order Order[]
+  order     Order[]
 }
 
-model Category{
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
+model Category {
+  id        String     @id @default(uuid()) @db.Char(36)
+  name      String
   fooditems FoodItem[]
   // foodItemId String @unique @default(auto()) @map("_id")
   // fooditems FoodItem[] @relation(fields: [foodItemId], references: [id])
 }
 
 model FoodItem {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
-  img String?
-  options Int[]
+  id          String      @id @default(uuid()) @db.Char(36)
+  name        String
+  img         String?
+  options     Json
   description String?
-  categoryId String @db.ObjectId
-  categoryName Category @relation(fields: [categoryId], references: [id])
-  orderItems OrderItem[]
+  categoryId  String      @db.Char(36)
+  category    Category    @relation(fields: [categoryId], references: [id])
+  orderItems  OrderItem[] // Relation to OrderItem
+
+  @@index([categoryId]) // Index for categoryId
 }
 
 model Order {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  email String
+  id         String      @id @default(uuid()) @db.Char(36)
+  email      String
   totalPrice Int
-  userId String @db.ObjectId
-  user User @relation(fields: [userId], references: [id])
-  orderDate DateTime @default(now())
-  orderItems OrderItem[]
+  userId     String      @db.Char(36)
+  user       User        @relation(fields: [userId], references: [id])
+  orderDate  DateTime    @default(now())
+  orderItems OrderItem[] // Relation to OrderItem
 }
 
 model OrderItem {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  orderId String @db.ObjectId
-  order Order @relation(fields: [orderId], references: [id])
-  quantity Int 
-  foodItemId String[] @db.ObjectId
-  foodItems FoodItem @relation(fields: [foodItemId], references: [id])
+  id         String   @id @default(uuid()) @db.Char(36)
+  orderId    String   @db.Char(36)
+  order      Order    @relation(fields: [orderId], references: [id])
+  quantity   Int
+  foodItemId String   @db.Char(36) // Single reference to FoodItem
+  foodItem   FoodItem @relation(fields: [foodItemId], references: [id])
+
+  @@index([orderId]) // Index for orderId
+  @@index([foodItemId]) // Index for foodItemId
 }
