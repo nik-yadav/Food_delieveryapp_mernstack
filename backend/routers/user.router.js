@@ -3,24 +3,29 @@ const router = express.Router();
 const authController = require('../controllers/auth.controller.js')
 
 // api = "http://localhost:8000/api/createuser"
+// router.post(
+//   "/createuser",
+//   [
+//     body("email").isEmail(),
+//     body("name").isLength({ min: 5 }),
+//     body("password", "Incorrect Password").isLength({ min: 5 }),
+//   ],
+//   authController.createUser
+// );
 router.post(
-  "/createuser",
-  [
-    body("email").isEmail(),
-    body("name").isLength({ min: 5 }),
-    body("password", "Incorrect Password").isLength({ min: 5 }),
-  ],
-  authController.createUser
+  "/createuser", authController.createUser
 );
-
+router.post(
+  "/loginuser", authController.userLogin
+);
 // api = "http://localhost:8000/api/loginuser"
-router.post(
-  "/loginuser",
-  [
-    body("email").isEmail(),
-    body("password", "Incorrect Password").isLength({ min: 5 }),
-  ],
-  authController.userLogin
-);
+// router.post(
+//   "/loginuser",
+//   [
+//     body("email").isEmail(),
+//     body("password", "Incorrect Password").isLength({ min: 5 }),
+//   ],
+//   authController.userLogin
+// );
 
 module.exports = router;
