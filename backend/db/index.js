@@ -2,32 +2,26 @@ const { query } = require("express");
 const { API_CALLS } = require("../constant.js");
 const { prisma } = require("../prismaClient.js");
 
-const create = async (table_name, data) => {
+const create = async (table_name, query) => {
   try {
-    const response = await prisma[table_name].create({
-      data,
-    });
+    const response = await prisma[table_name].create(query);
     return response;
   } catch (error) {
     throw error;
   }
 };
-const createMany = async (table_name, data) => {
+const createMany = async (table_name, query) => {
   try {
-    const response = await prisma[table_name].createMany({
-      data,
-    });
+    const response = await prisma[table_name].createMany(query);
     return response;
   } catch (error) {
     throw error;
   }
 };
 
-const findUnique = async (table_name, data) => {
+const findUnique = async (table_name, query) => {
   try {
-    const response = await prisma[table_name].findUnique({
-      query,
-    });
+    const response = await prisma[table_name].findUnique(query);
     return response;
   } catch (error) {
     throw error;
@@ -36,9 +30,7 @@ const findUnique = async (table_name, data) => {
 
 const update = async (table_name, query) => {
   try {
-    const response = await prisma[table_name].update({
-      query,
-    });
+    const response = await prisma[table_name].update(query);
     return response;
   } catch (error) {
     throw error;
@@ -46,9 +38,7 @@ const update = async (table_name, query) => {
 };
 const updateMany = async (table_name, query) => {
   try {
-    const response = await prisma[table_name].update({
-      query,
-    });
+    const response = await prisma[table_name].update(query);
     return response;
   } catch (error) {
     throw error;
@@ -87,9 +77,11 @@ const DB = async (call_type, table_name, query) => {
         break;
       case API_CALLS.FIND_UNIQUE:
         response = await findUnique(table_name, query);
+        break;
 
       default:
         response = {};
+        break;
     }
 
     return response;
