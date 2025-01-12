@@ -24,6 +24,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   order     Order[]
+  cart      Cart?
 }
 
 model Category {
@@ -37,14 +38,15 @@ model Category {
 model FoodItem {
   id          String      @id @default(uuid()) @db.Char(36)
   name        String
-  img         String?
+  img         String?     @db.VarChar(255)
   options     Json
   description String?
   categoryId  String      @db.Char(36)
   category    Category    @relation(fields: [categoryId], references: [id])
-  orderItems  OrderItem[] // Relation to OrderItem
+  orderItems  OrderItem[]
+  cartItems   CartItems[]
 
-  @@index([categoryId]) // Index for categoryId
+  @@index([categoryId])
 }
 
 model Order {
@@ -54,7 +56,7 @@ model Order {
   userId     String      @db.Char(36)
   user       User        @relation(fields: [userId], references: [id])
   orderDate  DateTime    @default(now())
-  orderItems OrderItem[] // Relation to OrderItem
+  orderItems OrderItem[]
 }
 
 model OrderItem {
@@ -67,4 +69,24 @@ model OrderItem {
 
   @@index([orderId]) // Index for orderId
   @@index([foodItemId]) // Index for foodItemId
+}
+
+model Cart {
+  id        String      @id @default(uuid()) @db.Char(36)
+  userId    String      @unique @db.Char(36)
+  user      User        @relation(fields: [userId], references: [id])
+  cartItems CartItems[]
+}
+
+model CartItems {
+  id         String   @id @default(uuid()) @db.Char(36)
+  cartId     String   @db.Char(36)
+  cart       Cart     @relation(fields: [cartId], references: [id])
+  foodItemId String
+  foodItem   FoodItem @relation(fields: [foodItemId], references: [id])
+  quantity   Int
+  price      Float
+
+  @@index([cartId])
+  @@index([foodItemId])
 }
