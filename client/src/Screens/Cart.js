@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Mycontext } from "../Components/Contextreducer";
 import { datacontext } from "../Components/Contextreducer";
-import Navbar from "../Components/Navbar";
+import Navbar from "../Components/Navbar/Navbar";
 import { Delete } from "@mui/icons-material";
 import { loadata } from "../utils/api";
 import api from "../utils/service";
