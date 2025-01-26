@@ -12,9 +12,9 @@ const API_CALLS = {
 }
 
 const TABLE = {
-    FOOD_ITEM: "fooditem", 
+    FOOD_ITEM: "foodItem", 
     ORDER: 'order',
-    ORDER_ITEM: 'orderitem',
+    ORDER_ITEM: 'orderItem',
     CATEGORY: 'category',
     USER: 'user',
 }

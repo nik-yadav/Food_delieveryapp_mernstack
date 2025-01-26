@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const foodDataController = require('../controllers/foodData.controller')
 
-router.get("/foodData", foodDataController.getFoodData);
+router.get("/getallfooddata", foodDataController.getFoodData);
 router.post('/orderdata', foodDataController.getUserOrderedData);
 router.post('/orderdatahelp', foodDataController.createOrderData);
 router.post('/myOrderData', foodDataController.getUserOrderData);
